@@ -1,10 +1,6 @@
-package com.fariznst0075.assesment1
+package com.fariznst0075.assesment1.ui.screen
 
 import android.content.res.Configuration
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,19 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fariznst0075.assesment1.R
 import com.fariznst0075.assesment1.ui.theme.Assesment1Theme
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Assesment1Theme {
-                MainScreen()
-            }
-        }
-    }
-}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(){
@@ -46,7 +32,7 @@ fun MainScreen(){
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
-            )
+                )
             )
         }
     ) { padding ->
