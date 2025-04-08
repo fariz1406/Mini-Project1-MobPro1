@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Assesment1</string>
     <string name="logo_desc">logo</string>
-    <string name="suhu_intro">simple application for temperature conversion</string>
-    <string name="suhu1">Temperature 1</string>
-    <string name="suhu2">Temperature 2</string>
+    <string name="suhu_intro">Enter the temperature you want to convert, select the origin unit and destination unit. The app will calculate the conversion result.</string>
+    <string name="input">Input Temperature</string>
+    <string name="conversion">Conversion</string>
+    <string name="conversion_to">Conversion to</string>
+    <string name="validation_input">Invalid input</string>
 </resources>

@@ -4,12 +4,18 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -34,7 +40,7 @@ import com.fariznst0075.assesment1.ui.theme.Assesment1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
+fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -61,49 +67,128 @@ fun MainScreen(){
                     .height(120.dp)
             )
 
-
+            ScreenContent()
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier){
-    var suhu1 by remember { mutableStateOf("") }
-    var suhu2 by remember { mutableStateOf("") }
+fun ScreenContent(modifier: Modifier = Modifier) {
+    var suhuInput by remember { mutableStateOf("") }
+    val options = listOf("Celsius", "Fahrenheit", "Reamur", "Kelvin")
+
+    var expandedInput by remember { mutableStateOf(false) }
+    var selectedInputUnit by remember { mutableStateOf(options[0]) }
+
+    var expandedTarget by remember { mutableStateOf(false) }
+    var selectedTargetUnit by remember { mutableStateOf(options[1]) }
+
+    var hasilKonversi by remember { mutableStateOf<String?>(null) }
 
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.suhu_intro),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = suhu1,
-            onValueChange = { suhu1 = it},
-            label = { Text(text = stringResource(R.string.suhu1)) },
-            trailingIcon = { Text(text = "°") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next
-            ),
-            modifier = Modifier.fillMaxWidth()
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = suhuInput,
+                onValueChange = { suhuInput = it },
+                label = { Text(text = stringResource(id = R.string.input)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                modifier = Modifier.weight(0.6f)
+            )
+
+            ExposedDropdownMenuBox(
+                expanded = expandedInput,
+                onExpandedChange = { expandedInput = !expandedInput },
+                modifier = Modifier.weight(0.4f)
+            ) {
+                OutlinedTextField(
+                    value = selectedInputUnit,
+                    onValueChange = {},
+                    readOnly = true,
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedInput)
+                    },
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth()
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expandedInput,
+                    onDismissRequest = { expandedInput = false }
+                ) {
+                    options.forEach { unit ->
+                        DropdownMenuItem(
+                            text = { Text(unit) },
+                            onClick = {
+                                selectedInputUnit = unit
+                                expandedInput = false
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        Text(
+            text = stringResource(id = R.string.conversion_to),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(start = 4.dp)
         )
-        OutlinedTextField(
-            value = suhu2,
-            onValueChange = { suhu2 = it},
-            label = { Text(text = stringResource(R.string.suhu2)) },
-            trailingIcon = { Text(text = "°") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next
-            ),
+
+        // Dropdown Tujuan
+        ExposedDropdownMenuBox(
+            expanded = expandedTarget,
+            onExpandedChange = { expandedTarget = !expandedTarget },
             modifier = Modifier.fillMaxWidth()
-        )
+        ) {
+            OutlinedTextField(
+                value = selectedTargetUnit,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTarget)
+                },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
+            )
+
+            ExposedDropdownMenu(
+                expanded = expandedTarget,
+                onDismissRequest = { expandedTarget = false }
+            ) {
+                options.forEach { unit ->
+                    DropdownMenuItem(
+                        text = { Text(unit) },
+                        onClick = {
+                            selectedTargetUnit = unit
+                            expandedTarget = false
+                        }
+                    )
+                }
+            }
+        }
+
     }
 }
 
