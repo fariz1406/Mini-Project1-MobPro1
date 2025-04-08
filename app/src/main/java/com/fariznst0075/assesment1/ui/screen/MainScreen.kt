@@ -58,7 +58,7 @@ fun MainScreen() {
                 .padding(padding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            // Gambar logo di bawah AppBar
             Image(
                 painter = painterResource(id = R.drawable.logo_app),
                 contentDescription = stringResource(id = R.string.logo_desc),
@@ -67,6 +67,7 @@ fun MainScreen() {
                     .height(120.dp)
             )
 
+            // Panggil konten utama di bawah logo
             ScreenContent()
         }
     }
@@ -97,7 +98,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
-
+        // Row Input & Dropdown
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -106,7 +107,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = suhuInput,
                 onValueChange = { suhuInput = it },
-                label = { Text(text = stringResource(id = R.string.input)) },
+                label = { Text("Input Suhu") },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -189,6 +190,58 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             }
         }
 
+// Tombol Konversi
+        Button(
+            onClick = {
+                val input = suhuInput.toDoubleOrNull()
+                hasilKonversi = if (input != null) {
+                    val hasil = konversiSuhu(input, selectedInputUnit, selectedTargetUnit)
+                    "%.2f °%s = %.2f °%s".format(
+                        input, selectedInputUnit, hasil, selectedTargetUnit
+                    )
+                } else {
+                    "Input tidak valid"
+                }
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            contentPadding = PaddingValues(horizontal=32.dp, vertical=16.dp)
+
+
+        ) {
+            Text(text = stringResource(id = R.string.conversion))
+        }
+
+
+        // Hasil Konversi
+        hasilKonversi?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+
+    }
+}
+
+
+fun konversiSuhu(nilai: Double, dari: String, ke: String): Double {
+    val keCelsius = when (dari) {
+        "Celsius" -> nilai
+        "Fahrenheit" -> (nilai - 32) * 5 / 9
+        "Reamur" -> nilai * 5 / 4
+        "Kelvin" -> nilai - 273.15
+        else -> nilai
+    }
+
+    return when (ke) {
+        "Celsius" -> keCelsius
+        "Fahrenheit" -> keCelsius * 9 / 5 + 32
+        "Reamur" -> keCelsius * 4 / 5
+        "Kelvin" -> keCelsius + 273.15
+        else -> keCelsius
     }
 }
 
