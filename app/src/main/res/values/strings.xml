@@ -6,4 +6,5 @@
     <string name="conversion">Conversion</string>
     <string name="conversion_to">Conversion to</string>
     <string name="validation_input">Invalid input</string>
+    <string name="about">About the application</string>
 </resources>

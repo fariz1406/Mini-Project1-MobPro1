@@ -35,12 +35,21 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+
 import com.fariznst0075.assesment1.R
 import com.fariznst0075.assesment1.ui.theme.Assesment1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+    var expandedMenu by remember { mutableStateOf(false) }
+    var resetTrigger by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -48,7 +57,31 @@ fun MainScreen() {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
-                )
+                ),
+                actions = {
+                    IconButton(onClick = { expandedMenu = true }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "Menu")
+                    }
+                    DropdownMenu(
+                        expanded = expandedMenu,
+                        onDismissRequest = { expandedMenu = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = stringResource(id = R.string.app_name)) },
+                            onClick = {
+                                expandedMenu = false
+
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Reset Input") },
+                            onClick = {
+                                resetTrigger = true
+                                expandedMenu = false
+                            }
+                        )
+                    }
+                }
             )
         }
     ) { padding ->
@@ -58,7 +91,7 @@ fun MainScreen() {
                 .padding(padding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Gambar logo di bawah AppBar
+
             Image(
                 painter = painterResource(id = R.drawable.logo_app),
                 contentDescription = stringResource(id = R.string.logo_desc),
@@ -67,25 +100,37 @@ fun MainScreen() {
                     .height(120.dp)
             )
 
-            // Panggil konten utama di bawah logo
-            ScreenContent()
+            ScreenContent(resetTrigger = resetTrigger,
+                onResetHandled = { resetTrigger = false })
         }
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier) {
-    var suhuInput by remember { mutableStateOf("") }
+fun ScreenContent(
+    modifier: Modifier = Modifier,
+    resetTrigger: Boolean,
+    onResetHandled: () -> Unit
+) {
     val options = listOf("Celsius", "Fahrenheit", "Reamur", "Kelvin")
 
-    var expandedInput by remember { mutableStateOf(false) }
+    var suhuInput by remember { mutableStateOf("") }
     var selectedInputUnit by remember { mutableStateOf(options[0]) }
-
-    var expandedTarget by remember { mutableStateOf(false) }
     var selectedTargetUnit by remember { mutableStateOf(options[1]) }
-
     var hasilKonversi by remember { mutableStateOf<String?>(null) }
+
+    var expandedInput by remember { mutableStateOf(false) }
+    var expandedTarget by remember { mutableStateOf(false) }
+
+    if (resetTrigger) {
+        suhuInput = ""
+        selectedInputUnit = options[0]
+        selectedTargetUnit = options[1]
+        hasilKonversi = null
+        onResetHandled()
+    }
 
     Column(
         modifier = modifier
@@ -98,7 +143,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
-        // Row Input & Dropdown
+        // Input & Dropdown
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -210,7 +255,6 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         ) {
             Text(text = stringResource(id = R.string.conversion))
         }
-
 
         // Hasil Konversi
         hasilKonversi?.let {
