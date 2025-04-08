@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">Assesment1</string>
     <string name="logo_desc">logo</string>
+    <string name="suhu_intro">"aplikasi sederhana untuk konversi suhu "</string>
+    <string name="suhu1">Suhu 1</string>
+    <string name="suhu2">Suhu 2</string>
 </resources>
