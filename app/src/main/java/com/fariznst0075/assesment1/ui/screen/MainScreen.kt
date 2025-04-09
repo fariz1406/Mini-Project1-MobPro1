@@ -11,11 +11,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -34,14 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-
 import com.fariznst0075.assesment1.R
 import com.fariznst0075.assesment1.ui.theme.Assesment1Theme
 
@@ -117,6 +117,7 @@ fun ScreenContent(
     val options = listOf("Celsius", "Fahrenheit", "Reamur", "Kelvin")
 
     var suhuInput by remember { mutableStateOf("") }
+    var suhuInputError by remember { mutableStateOf(false) }
     var selectedInputUnit by remember { mutableStateOf(options[0]) }
     var selectedTargetUnit by remember { mutableStateOf(options[1]) }
     var hasilKonversi by remember { mutableStateOf<String?>(null) }
@@ -152,7 +153,10 @@ fun ScreenContent(
             OutlinedTextField(
                 value = suhuInput,
                 onValueChange = { suhuInput = it },
-                label = { Text("Input Suhu") },
+                label = { Text(text = stringResource(id = R.string.input)) },
+                trailingIcon = { IconPicker(suhuInputError, "") },
+                supportingText = { ErrorHint(suhuInputError) },
+                isError = suhuInputError,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -239,6 +243,10 @@ fun ScreenContent(
         Button(
             onClick = {
                 val input = suhuInput.toDoubleOrNull()
+
+                suhuInputError = (suhuInput == "" || suhuInput == "0")
+                if (suhuInputError) return@Button
+
                 hasilKonversi = if (input != null) {
                     val hasil = konversiSuhu(input, selectedInputUnit, selectedTargetUnit)
                     "%.2f °%s = %.2f °%s".format(
@@ -286,6 +294,22 @@ fun konversiSuhu(nilai: Double, dari: String, ke: String): Double {
         "Reamur" -> keCelsius * 4 / 5
         "Kelvin" -> keCelsius + 273.15
         else -> keCelsius
+    }
+}
+
+@Composable
+fun IconPicker(isError: Boolean, unit: String) {
+    if (isError) {
+        Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
+    } else {
+        Text(text = unit)
+    }
+}
+
+@Composable
+fun ErrorHint(isError: Boolean) {
+    if (isError) {
+        Text(text = stringResource(R.string.input_invalid))
     }
 }
 

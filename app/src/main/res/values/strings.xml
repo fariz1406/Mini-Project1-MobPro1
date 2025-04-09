@@ -3,6 +3,7 @@
     <string name="logo_desc">logo</string>
     <string name="suhu_intro">Enter the temperature you want to convert, select the origin unit and destination unit. The app will calculate the conversion result.</string>
     <string name="input">Input Temperature</string>
+    <string name="input_invalid">Input cannot be empty</string>
     <string name="conversion">Conversion</string>
     <string name="conversion_to">Conversion to</string>
     <string name="validation_input">Invalid input</string>

@@ -4,6 +4,7 @@
     <string name="logo_desc">logo</string>
     <string name="suhu_intro">Masukkan suhu yang ingin dikonversi, pilih satuan asal dan satuan tujuan. Aplikasi ini akan menghitung hasil konversi.</string>
     <string name="input">Input Suhu</string>
+    <string name="input_invalid">Input tidak boleh kosong</string>
     <string name="conversion">Konversi</string>
     <string name="conversion_to">Konversi ke</string>
     <string name="validation_input">Input tidak valid</string>
