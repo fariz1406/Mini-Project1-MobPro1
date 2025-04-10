@@ -40,7 +40,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.fariznst0075.assesment1.R
 import com.fariznst0075.assesment1.ui.theme.Assesment1Theme
@@ -178,7 +177,6 @@ fun ScreenContent(
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedInput)
                     },
                     modifier = Modifier
-                        .menuAnchor()
                         .fillMaxWidth()
                 )
 
@@ -219,7 +217,6 @@ fun ScreenContent(
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTarget)
                 },
                 modifier = Modifier
-                    .menuAnchor()
                     .fillMaxWidth()
             )
 
