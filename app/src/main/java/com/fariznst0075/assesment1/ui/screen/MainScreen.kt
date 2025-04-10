@@ -156,11 +156,10 @@ fun ScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
         // Input & Dropdown
-// Input & Dropdown
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 64.dp), // memastikan tinggi sejajar
+                .heightIn(min = 64.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -178,7 +177,7 @@ fun ScreenContent(
                 ),
                 modifier = Modifier
                     .weight(0.6f)
-                    .heightIn(min = 64.dp) // menyamakan tinggi
+                    .heightIn(min = 64.dp)
             )
 
             ExposedDropdownMenuBox(
@@ -186,7 +185,7 @@ fun ScreenContent(
                 onExpandedChange = { expandedInput = !expandedInput },
                 modifier = Modifier
                     .weight(0.4f)
-                    .heightIn(min = 64.dp) // menyamakan tinggi
+                    .heightIn(min = 64.dp)
             ) {
                 OutlinedTextField(
                     value = selectedInputUnit,
