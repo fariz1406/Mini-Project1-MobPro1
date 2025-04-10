@@ -41,12 +41,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.fariznst0075.assesment1.R
+import com.fariznst0075.assesment1.navigation.Screen
 import com.fariznst0075.assesment1.ui.theme.Assesment1Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     var expandedMenu by remember { mutableStateOf(false) }
     var resetTrigger by remember { mutableStateOf(false) }
     Scaffold(
@@ -69,6 +73,7 @@ fun MainScreen() {
                             text = { Text(text = stringResource(id = R.string.about)) },
                             onClick = {
                                 expandedMenu = false
+                                navController.navigate(Screen.About.route)
 
                             }
                         )
@@ -177,6 +182,7 @@ fun ScreenContent(
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedInput)
                     },
                     modifier = Modifier
+                        .menuAnchor()
                         .fillMaxWidth()
                 )
 
@@ -217,6 +223,7 @@ fun ScreenContent(
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTarget)
                 },
                 modifier = Modifier
+                    .menuAnchor()
                     .fillMaxWidth()
             )
 
@@ -315,6 +322,6 @@ fun ErrorHint(isError: Boolean) {
 @Composable
 fun MainScreenPreview() {
     Assesment1Theme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }
