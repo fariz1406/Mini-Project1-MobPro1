@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -154,8 +156,11 @@ fun ScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
         // Input & Dropdown
+// Input & Dropdown
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 64.dp), // memastikan tinggi sejajar
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -171,13 +176,17 @@ fun ScreenContent(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
-                modifier = Modifier.weight(0.6f)
+                modifier = Modifier
+                    .weight(0.6f)
+                    .heightIn(min = 64.dp) // menyamakan tinggi
             )
 
             ExposedDropdownMenuBox(
                 expanded = expandedInput,
                 onExpandedChange = { expandedInput = !expandedInput },
-                modifier = Modifier.weight(0.4f)
+                modifier = Modifier
+                    .weight(0.4f)
+                    .heightIn(min = 64.dp) // menyamakan tinggi
             ) {
                 OutlinedTextField(
                     value = selectedInputUnit,
@@ -187,7 +196,7 @@ fun ScreenContent(
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedInput)
                     },
                     modifier = Modifier
-                        .menuAnchor()
+                        .menuAnchor(type = MenuAnchorType.PrimaryNotEditable)
                         .fillMaxWidth()
                 )
 
@@ -207,6 +216,7 @@ fun ScreenContent(
                 }
             }
         }
+
 
         Text(
             text = stringResource(id = R.string.conversion_to),
@@ -228,7 +238,7 @@ fun ScreenContent(
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTarget)
                 },
                 modifier = Modifier
-                    .menuAnchor()
+                    .menuAnchor(type = MenuAnchorType.PrimaryNotEditable)
                     .fillMaxWidth()
             )
 
@@ -283,21 +293,22 @@ fun ScreenContent(
                     .align(Alignment.CenterHorizontally)
             )
             Button(
-                onClick = {
-                    shareData(
-                        context = context,
-                        message = hasilKonversi ?: ""
-                    )
-                },
-                modifier = Modifier.padding(top = 8.dp),
-                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
-            ) {
-                Text(text = stringResource(R.string.share))
+                    onClick = {
+                        shareData(
+                            context = context,
+                            message = hasilKonversi ?: ""
+                        )
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    contentPadding = PaddingValues(horizontal=32.dp, vertical=16.dp)
+                ) {
+                    Text(text = stringResource(R.string.share))
+                }
             }
         }
 
     }
-}
+
 
 
 fun konversiSuhu(nilai: Double, dari: String, ke: String): Double {
