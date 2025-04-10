@@ -67,7 +67,7 @@ fun MainScreen() {
                         onDismissRequest = { expandedMenu = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text(text = stringResource(id = R.string.app_name)) },
+                            text = { Text(text = stringResource(id = R.string.about)) },
                             onClick = {
                                 expandedMenu = false
 
