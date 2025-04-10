@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -120,14 +121,14 @@ fun ScreenContent(
 ) {
     val options = listOf("Celsius", "Fahrenheit", "Reamur", "Kelvin")
 
-    var suhuInput by remember { mutableStateOf("") }
-    var suhuInputError by remember { mutableStateOf(false) }
-    var selectedInputUnit by remember { mutableStateOf(options[0]) }
-    var selectedTargetUnit by remember { mutableStateOf(options[1]) }
-    var hasilKonversi by remember { mutableStateOf<String?>(null) }
+    var suhuInput by rememberSaveable { mutableStateOf("") }
+    var suhuInputError by rememberSaveable { mutableStateOf(false) }
+    var selectedInputUnit by rememberSaveable { mutableStateOf(options[0]) }
+    var selectedTargetUnit by rememberSaveable { mutableStateOf(options[1]) }
+    var hasilKonversi by rememberSaveable { mutableStateOf<String?>(null) }
 
-    var expandedInput by remember { mutableStateOf(false) }
-    var expandedTarget by remember { mutableStateOf(false) }
+    var expandedInput by rememberSaveable { mutableStateOf(false) }
+    var expandedTarget by rememberSaveable { mutableStateOf(false) }
 
     if (resetTrigger) {
         suhuInput = ""
