@@ -11,4 +11,6 @@
     <string name="about">Tentang Aplikasi</string>
     <string name="copyright">Aplikasi Konversi Suhu adalah aplikasi yang membantu pengguna untuk mengonversi suhu dari satu satuan ke satuan lainnya seperti Celsius, Fahrenheit, Kelvin, dan Reamur.  \n \nAplikasi ini dibuat untuk Assesment 1 pemrograman untuk perangkat bergerak 1.\n\nCopyright © 2024–2025 Fariz Rahman Nst. \nAll Right Reserved.</string>
     <string name="back">Kembali</string>
+    <string name="share">Bagikan</string>
+    <string name="share_template">%.2f °%s = %.2f °%s</string>
 </resources>

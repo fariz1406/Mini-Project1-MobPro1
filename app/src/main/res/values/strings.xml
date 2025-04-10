@@ -10,4 +10,6 @@
     <string name="about">About the App</string>
     <string name="copyright">Temperature Conversion Application is an application that helps users to convert temperature from one unit to another such as Celsius, Fahrenheit, Kelvin, and Reamur. \n \nThis application is made for Assessment 1 programming for mobile devices 1. \n\nCopyright © 2024–2025 Fariz Rahman Nst. \nAll Right Reserved.</string>
     <string name="back">Back</string>
+    <string name="share">Share</string>
+    <string name="share_template">%.2f °%s = %.2f °%s</string>
 </resources>
