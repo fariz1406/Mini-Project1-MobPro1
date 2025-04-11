@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Assesment1</string>
+    <string name="app_name">TempeRate</string>
     <string name="logo_desc">logo</string>
     <string name="suhu_intro">Masukkan suhu yang ingin dikonversi, pilih satuan asal dan satuan tujuan. Aplikasi ini akan menghitung hasil konversi.</string>
     <string name="input">Input Suhu</string>
